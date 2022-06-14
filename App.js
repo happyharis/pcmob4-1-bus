@@ -9,6 +9,7 @@ import {
 
 export default function App() {
   const [loading, setLoading] = useState(true);
+  const [arrival, setArrival] = useState("");
   const BUSSTOP_URL = "https://arrivelah2.busrouter.sg/?id=83139";
 
   function loadBusStopData() {
@@ -17,11 +18,13 @@ export default function App() {
         return response.json();
       })
       .then((responseData) => {
-        console.log(responseData);
+        console.log(responseData.services);
         const myBus = responseData.services.filter(
           (service) => service.no === "155"
         )[0];
-        console.log(myBus);
+        console.log(myBus.next.time);
+        setArrival(myBus.next.time);
+        setLoading(false);
       });
   }
 
@@ -33,7 +36,7 @@ export default function App() {
     <View style={styles.container}>
       <Text style={styles.title}>Bus Arrival Time: </Text>
       <Text style={styles.arrivalTime}>
-        {loading ? <ActivityIndicator color="blue" /> : "Loaded"}
+        {loading ? <ActivityIndicator color="blue" /> : arrival}
       </Text>
 
       <TouchableOpacity style={styles.button} onPress={() => setLoading(true)}>
