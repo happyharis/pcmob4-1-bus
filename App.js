@@ -18,18 +18,19 @@ export default function App() {
         return response.json();
       })
       .then((responseData) => {
-        console.log(responseData.services);
+        // console.log(responseData.services);
         const myBus = responseData.services.filter(
           (service) => service.no === "155"
         )[0];
-        console.log(myBus.next.time);
-        setArrival(myBus.next.time);
+        console.log(myBus.next.duration_ms);
+        setArrival(myBus.next.duration_ms);
         setLoading(false);
       });
   }
 
   useEffect(() => {
-    loadBusStopData();
+    const interval = setInterval(loadBusStopData, 1000);
+    return () => clearInterval(interval);
   }, []);
 
   return (
