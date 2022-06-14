@@ -10,6 +10,7 @@ import {
 export default function App() {
   const [loading, setLoading] = useState(true);
   const [arrival, setArrival] = useState("");
+
   const BUSSTOP_URL = "https://arrivelah2.busrouter.sg/?id=83139";
 
   function loadBusStopData() {
