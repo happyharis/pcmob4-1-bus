@@ -22,8 +22,10 @@ export default function App() {
         const myBus = responseData.services.filter(
           (service) => service.no === "155"
         )[0];
-        console.log(myBus.next.duration_ms);
-        setArrival(myBus.next.duration_ms);
+        const duration_ms = myBus.next.duration_ms;
+        console.log(duration_ms);
+        const duration_mins = Math.floor(duration_ms / 60000);
+        setArrival(`${duration_mins} minutes`);
         setLoading(false);
       });
   }
@@ -36,7 +38,7 @@ export default function App() {
   return (
     <View style={styles.container}>
       <Text style={styles.title}>Bus Arrival Time: </Text>
-      <Text style={styles.arrivalTime}>
+      <Text style={styles.title}>
         {loading ? <ActivityIndicator color="blue" /> : arrival}
       </Text>
 
